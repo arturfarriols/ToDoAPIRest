@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.Transient;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,7 +45,14 @@ public class TaskService {
         if (optionalTask.isEmpty()) {
             throw new ToDoExceptions("Task not found", HttpStatus.NOT_FOUND);
         }
-        this.taskRepository.markTaskAsFinished(id);
+        Task task = optionalTask.get();
+        task.setFinished(true);
+        if (optionalTask.get().getExpectedTimeArrival().isBefore(LocalDateTime.now())) {
+            task.setTaskStatus(TaskStatus.LATE);
+        }
+        this.taskRepository.save(task);
+
+
     }
 
     public void deleteTaskById(Long id) {
