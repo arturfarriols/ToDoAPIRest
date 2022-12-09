@@ -1,5 +1,6 @@
 package com.sacavix.todoapp.persistence.entity;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull
     private String title;
     private String description;
     private LocalDateTime createdDate;

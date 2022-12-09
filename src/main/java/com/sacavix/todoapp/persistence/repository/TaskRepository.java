@@ -8,10 +8,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface TaskRepository extends JpaRepository<Task, Long> {
 
      List<Task> findAllByTaskStatus(TaskStatus taskStatus);
+     Optional<Task> findByTitle(String title);
 
     @Modifying
     @Query(value = "UPDATE TASK SET FINISHED=true WHERE ID=:id", nativeQuery = true)
